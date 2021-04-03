@@ -3,28 +3,31 @@ package main
 import "fmt"
 
 func main() {
-	//printing given data
-	fmt.Println("Given data:")
-	for key, val := range givenData {
-		fmt.Println(key, val)
-	}
+	// //printing given data
+	// fmt.Println("Given data:")
+	// for key, val := range givenData {
+	// 	fmt.Println(key, val)
+	// }
 
-	//process starting from here
-	type list []interface{}         //list is a slice of interface
-	result := make(map[string]list) //defining a result variable
-
-	for key := range givenData {
-		mapKey := givenData[key]["account_type"].(string) //getting the key for given map data
-
-		result[mapKey] = append(result[mapKey], givenData[key]["name"]) //setting the name value(got from given data) to result variable
-	}
-	//process end here
+	result := listAccount(givenData)
 
 	//printing the result
-	fmt.Println("\nResult data:")
+	fmt.Println("Result data:")
 	for key, val := range result {
 		fmt.Println(key, val)
 	}
+}
+
+func listAccount(data []map[string]interface{}) map[string][]interface{} {
+	result := make(map[string][]interface{}) //defining a result variable
+
+	for key := range data {
+		mapKey := data[key]["account_type"].(string) //getting the key for given map data
+
+		result[mapKey] = append(result[mapKey], data[key]["name"]) //setting the name value(got from given data) to result variable
+	}
+
+	return result
 }
 
 //this is given data
